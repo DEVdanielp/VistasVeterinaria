@@ -165,6 +165,7 @@
     <Content Include="Paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="Paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="Paginas\Scripts\Login.js" />
+    <Content Include="Paginas\Scripts\Login_1.js" />
     <Content Include="Paginas\Scripts\Menu.js" />
     <Content Include="Paginas\Scripts\MenuLateral.js" />
     <Content Include="Paginas\Scripts\Pagina1.js" />
