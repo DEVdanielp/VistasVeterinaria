@@ -170,6 +170,7 @@
     <Content Include="Paginas\Scripts\MenuLateral.js" />
     <Content Include="Paginas\Scripts\Pagina1.js" />
     <Content Include="Paginas\Scripts\Pagina2.js" />
+    <Content Include="Paginas\Scripts\Prescripcion.html" />
     <Content Include="Scripts\adminlte.js" />
     <Content Include="Scripts\adminlte.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
