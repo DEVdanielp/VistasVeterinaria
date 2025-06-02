@@ -1,57 +1,151 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<html lang="es" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login Veterinaria</title>
 
-    <!-- Google Font: Source Sans Pro -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome -->
-    <link href="Estilos/css/all.min.css" rel="stylesheet" />
-    <!-- Theme style -->
-    <link href="Estilos/adminlte.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #e6f7f9;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            width: 360px;
+            box-sizing: border-box;
+        }
+
+        .login-logo h1 {
+            color: #357a85;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        .login-card-body p.login-box-msg {
+            color: #357a85;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Nuevo estilo para input con icono al lado */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 10px 12px;
+            font-size: 15px;
+            box-sizing: border-box;
+            width: 100%;
+            transition: border-color 0.3s;
+            padding-right: 40px; /* espacio para el icono a la derecha */
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: #4aa8b0;
+                box-shadow: 0 0 5px #4aa8b0;
+            }
+
+        .input-group-text {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #357a85;
+            font-size: 18px;
+            pointer-events: none; /* para que no interfiera con click o selección */
+        }
+
+        .btn-primary {
+            background-color: #4aa8b0;
+            border: none;
+            width: 100%;
+            padding: 12px 0;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .btn-primary:hover {
+                background-color: #3a9098;
+            }
+
+        .card-footer {
+            margin-top: 15px;
+            text-align: center;
+            color: #357a85;
+            min-height: 24px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .login-box {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
-<body class="hold-transition login-page">
+<body>
     <div class="login-box">
         <div class="login-logo">
             <h1>APLICACIÓN</h1>
         </div>
-        <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Ingresa usuario clave para iniciar</p>
+                <p class="login-box-msg">Ingresa usuario y clave para iniciar</p>
 
                 <form>
-                    <div class="input-group mb-3">
-                        <input type="text" id="txtUsuario" class="form-control" placeholder="Usuario">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user"></span>
-                            </div>
-                        </div>
+                    <div class="input-group">
+                        <input type="text" id="txtUsuario" class="form-control" placeholder="Usuario" />
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" id="txtClave" class="form-control" placeholder="Clave">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
+
+                    <div class="input-group">
+                        <input type="password" id="txtClave" class="form-control" placeholder="Clave" />
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     </div>
+
                     <div class="row">
                         <div class="col-12">
-                            <button type="button" class="btn btn-primary btn-block" onclick="Auth()">INGRESAR</button>
+                            <button type="button" class="btn btn-primary" onclick="Ingresar()">INGRESAR</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="card-footer">
-                <div id="dvMensaje" class=""></div>
+                <div id="dvMensaje"></div>
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
+
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
     <script src="Scripts/Login.js"></script>
