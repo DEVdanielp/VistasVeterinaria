@@ -9,7 +9,7 @@
             //Hubo un error al procesar el comando
             $("#dvMensaje").removeClass("alert alert-success");
             $("#dvMensaje").addClass("alert alert-danger");
-            $("#dvMensaje").html("No se pudo conectar con el servicio");
+            $("#dvMensaje").html("Ha ocurrido un error al auntenticarse");
         }
         else {
             if (Respuesta.Autenticado === false) {
@@ -27,6 +27,7 @@
                 $("#dvMensaje").html(Respuesta[0].Mensaje);
                 document.cookie = "Perfil=" + Respuesta[0].Perfil;
                 document.cookie = "Usuario=" + Respuesta[0].Usuario;
+                document.cookie = "Documento="+ Respuesta[0].Documento
                 window.location.href = Respuesta[0].PaginaInicio;
             }
         }

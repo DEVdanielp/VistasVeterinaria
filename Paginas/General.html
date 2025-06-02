@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Perfil Cliente - Veterinaria</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #e6f7f9;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #5ebec4;
+            color: black;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav h2 {
+            font-size: 22px;
+            color: black;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+            nav a:hover {
+                background-color: #4aa8b0;
+            }
+
+            nav a i {
+                margin-right: 6px;
+            }
+
+        .page-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: #357a85;
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+            .user-info img {
+                border-radius: 50%;
+                width: 120px;
+                height: 120px;
+                object-fit: cover;
+                border: 2px solid #4aa8b0;
+            }
+
+        .user-details p {
+            margin: 6px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .user-details i {
+            margin-right: 8px;
+            color: #4aa8b0;
+        }
+
+        .pet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pet-card {
+            background-color: #f1fafa;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+            .pet-card img {
+                width: 100px;
+                height: 100px;
+                border-radius: 12px;
+                object-fit: cover;
+                border: 2px solid #4aa8b0;
+            }
+
+        .pet-info p {
+            margin: 4px 0;
+            font-size: 15px;
+        }
+
+        .pet-info i {
+            margin-right: 6px;
+            color: #4aa8b0;
+        }
+
+        @media (max-width: 600px) {
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .pet-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <h2><i class="fas fa-paw"></i> Huellitas</h2>
+            <div class="nav-links">
+                <a onclick="ObtenerMascota()"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#"><i class="fas fa-user-md"></i> Veterinarios</a>
+                <a href="#"><i class="fas fa-dog"></i> Mascotas</a>
+                <a href="#"><i class="fas fa-pills"></i> Medicamentos</a>
+                <a href="#"><i class="fas fa-file-medical"></i> Prescripciones</a>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <div class="container">
+            <div class="section-title">Información del Cliente</div>
+            <div class="user-info">
+                <div class="user-details">
+                    <p><i class="fas fa-user"></i><strong> Nombre:</strong> <span id="nombreUsuario">Juan Pérez</span></p>
+                    <p><i class="fas fa-envelope"></i><strong> Correo:</strong> <span id="correoUsuario">juan@example.com</span></p>
+                    <p><i class="fas fa-phone"></i><strong> Teléfono:</strong> <span id="TelefonoUsuario">123456789</span></p>
+                    <p><i class="fas fa-map-marker-alt"></i><strong> Dirección:</strong> <span id="DireccionUsuario">Calle 123, Medellín</span></p>
+                </div>
+
+            </div>
+
+            <div class="section-title">Mascotas Registradas</div>
+            <div class="pet-list" id="listaMascotas">
+                <div class="pet-card">
+                    <img src="https://via.placeholder.com/100" alt="Foto de Rocky" />
+                    <div class="pet-info">
+                        <p><i class="fas fa-paw"></i><strong>Nombre:</strong> Rocky</p>
+                        <p><i class="fas fa-dog"></i><strong>Especie:</strong> Perro - Golden Retriever</p>
+                        <p><i class="fas fa-birthday-cake"></i><strong>Edad:</strong> 5 años</p>
+                        <p><i class="fas fa-calendar-check"></i><strong>Última visita:</strong> 15/05/2025</p>
+                    </div>
+                </div>
+
+                <div class="pet-card">
+                    <img src="https://via.placeholder.com/100" alt="Foto de Mia" />
+                    <div class="pet-info">
+                        <p><i class="fas fa-paw"></i><strong>Nombre:</strong> Mia</p>
+                        <p><i class="fas fa-cat"></i><strong>Especie:</strong> Gato - Persa</p>
+                        <p><i class="fas fa-birthday-cake"></i><strong>Edad:</strong> 3 años</p>
+                        <p><i class="fas fa-calendar-check"></i><strong>Última visita:</strong> 20/04/2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="../Scripts/jquery-3.4.1.min.js"></script>
+<script src="../Scripts/bootstrap.bundle.min.js"></script>
+<script src="Scripts/Usuario.js"></script>
+<script src="Scripts/Comunes/CRUD.js"></script>
+<script src="Scripts/Mascota.js?v=3"></script>
