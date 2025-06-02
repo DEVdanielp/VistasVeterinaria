@@ -1,8 +1,9 @@
 ﻿    var URLBase = "http://proyectoveterinaria.runasp.net/";
-    async function Ingresar(){
+    async function Auth(){
         let URL = URLBase + "api/Login/Ingresar";
         const login = new Login($("#txtUsuario").val(), $("#txtClave").val());
         const Respuesta = await EjecutarComandoServicioRpta("POST", URL, login);
+        console.log(Respuesta)
         if (Respuesta == null || Respuesta == undefined) {
             document.cookie = "token=0;path=/";
             //Hubo un error al procesar el comando
@@ -11,7 +12,7 @@
             $("#dvMensaje").html("No se pudo conectar con el servicio");
         }
         else {
-            if (Respuesta.Autenticado = false) {
+            if (Respuesta.Autenticado === false) {
                 $("#dvMensaje").removeClass("alert alert-success");
                 $("#dvMensaje").addClass("alert alert-danger");
                 $("#dvMensaje").html(Respuesta[0].Mensaje);
