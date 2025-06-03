@@ -167,6 +167,7 @@
     <Content Include="Paginas\Scripts\Login.js" />
     <Content Include="Paginas\Prescripcion.html" />
     <Content Include="Paginas\Scripts\Mascota.js" />
+    <Content Include="Paginas\Scripts\Prescripcion.js" />
     <Content Include="Paginas\Scripts\Usuario.js" />
     <Content Include="Scripts\adminlte.js" />
     <Content Include="Scripts\adminlte.min.js" />
