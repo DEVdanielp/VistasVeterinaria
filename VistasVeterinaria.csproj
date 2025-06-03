@@ -160,6 +160,8 @@
     <Content Include="Paginas\Login.html" />
     <Content Include="Paginas\Pagina2.html" />
     <Content Include="Paginas\PaginaBase.html" />
+    <Content Include="Paginas\Clientes.html" />
+    <Content Include="Paginas\Scripts\Comunes\Clientes.js" />
     <Content Include="Paginas\Scripts\Comunes\Comunes.js" />
     <Content Include="Paginas\Scripts\Comunes\CRUD.js" />
     <Content Include="Paginas\Scripts\Login.js" />

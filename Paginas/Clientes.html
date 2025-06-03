@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos y configuración -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lista de Clientes - Veterinaria</title>
+
+    <!-- Fuentes y estilos externos -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            background-color: #e6f7f9;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Barra de navegación */
+        nav {
+            background-color: #5ebec4;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        nav h2 {
+            font-size: 22px;
+            margin: 0;
+            color: black;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+            nav a:hover {
+                background-color: #4aa8b0;
+            }
+
+            nav a i {
+                margin-right: 6px;
+            }
+
+        /* Tabla y contenedor */
+        .container {
+            margin-top: 30px;
+        }
+
+        /* Estilo para tarjetas de mascotas en el modal */
+        .modal-body .pet-card {
+            background-color: #f1fafa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pet-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #4aa8b0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de navegación -->
+    <nav>
+        <div class="nav-container">
+            <h2><i class="fas fa-paw"></i> Huellitas</h2>
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#"><i class="fas fa-users"></i> Clientes</a>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <h3 class="text-primary mb-4">Clientes Registrados</h3>
+
+        <!-- Buscador de clientes -->
+        <div class="mb-3">
+            <input type="text" id="buscadorClientes" class="form-control" placeholder="Buscar por nombre, correo o teléfono...">
+        </div>
+
+        <!-- Tabla de clientes -->
+        <table class="table table-bordered table-striped bg-white shadow-sm">
+            <thead class="table-info">
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Direcciòn</th>
+                    <th>Telefono</th>
+                    <th>Correo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaClientes">
+                <!-- Aquí se insertan los clientes dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal para mostrar las mascotas del cliente -->
+    <div class="modal fade" id="modalMascotas" tabindex="-1" aria-labelledby="modalMascotasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalMascotasLabel">Mascotas del Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="contenedorMascotas">
+                    <!-- Aquí se cargan las mascotas -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts necesarios -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para manejar los datos -->
+    <script>
+        // Datos simulados de clientes
+        const clientes = [
+            { id: 1, nombre: "Carlos Pérez", correo: "carlos@mail.com", telefono: "3001234567" },
+            { id: 2, nombre: "María Gómez", correo: "maria@mail.com", telefono: "3107654321" },
+            { id: 3, nombre: "Ana Ramírez", correo: "ana@mail.com", telefono: "3208881122" }
+        ];
+
+        // Mascotas por cliente (simulado)
+        const mascotasPorCliente = {
+            1: [
+                { nombre: "Max", especie: "Perro", foto: "https://via.placeholder.com/80" },
+                { nombre: "Luna", especie: "Gato", foto: "https://via.placeholder.com/80" }
+            ],
+            2: [
+                { nombre: "Toby", especie: "Perro", foto: "https://via.placeholder.com/80" }
+            ],
+            3: []
+        };
+
+        // Inicialización al cargar el DOM
+        $(document).ready(function () {
+            cargarClientes(clientes); // Muestra todos los clientes inicialmente
+
+            // Evento de búsqueda
+            $('#buscadorClientes').on('input', function () {
+                const termino = $(this).val().toLowerCase();
+                const filtrados = clientes.filter(c =>
+                    c.nombre.toLowerCase().includes(termino) ||
+                    c.correo.toLowerCase().includes(termino) ||
+                    c.telefono.includes(termino)
+                );
+                cargarClientes(filtrados); // Muestra los filtrados
+            });
+        });
+
+        // Función para cargar clientes en la tabla
+        function cargarClientes(lista) {
+            $('#tablaClientes').html('');
+            lista.forEach(cliente => {
+                $('#tablaClientes').append(`
+                        <tr>
+                            <td>${cliente.nombre}</td>
+                            <td>${cliente.correo}</td>
+                            <td>${cliente.telefono}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm" onclick="verMascotas(${cliente.id}, '${cliente.nombre}')">
+                                    <i class="fas fa-dog"></i> Ver Mascotas
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+            });
+        }
+
+        // Función para mostrar las mascotas en el modal
+        function verMascotas(clienteId, nombreCliente) {
+            const mascotas = mascotasPorCliente[clienteId] || [];
+
+            $('#modalMascotasLabel').text(`Mascotas de ${nombreCliente}`);
+            $('#contenedorMascotas').html('');
+
+            if (mascotas.length === 0) {
+                $('#contenedorMascotas').html('<p class="text-muted">Este cliente no tiene mascotas registradas.</p>');
+            } else {
+                mascotas.forEach(mascota => {
+                    $('#contenedorMascotas').append(`
+                            <div class="pet-card">
+                                <img src="${mascota.foto}" alt="${mascota.nombre}" />
+                                <div>
+                                    <p><strong>Nombre:</strong> ${mascota.nombre}</p>
+                                    <p><strong>Especie:</strong> ${mascota.especie}</p>
+                                </div>
+                            </div>
+                        `);
+                });
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('modalMascotas'));
+            modal.show();
+        }
+    </script>
+</body>
+</html>
+<script src="Scripts/Comunes/CRUD.js"></script>
