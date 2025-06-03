@@ -85,6 +85,18 @@
             object-fit: cover;
             border: 2px solid #4aa8b0;
         }
+        
+        #dvMensaje{
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            min-width: 250px;
+            z-index: 1055; /* Por encima del modal y otros elementos */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            display: none; /* Oculto por defecto */
+        }
+
     </style>
 </head>
 <body>
@@ -104,6 +116,9 @@
     <!-- Contenido principal -->
     <div class="container">
         <h3 class="text-primary mb-4">Clientes Registrados</h3>
+
+        <!-- Div para mostrar mensajes dinámicos -->
+        <div id="dvMensaje"></div>
 
         <!-- Buscador de clientes -->
         <div class="mb-3">
@@ -145,6 +160,8 @@
 
     <!-- Modal para registrar mascota -->
     <div class="modal fade" id="modalRegistrarMascota" tabindex="-1" aria-labelledby="modalRegistrarMascotaLabel" aria-hidden="true">
+
+
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
@@ -202,3 +219,11 @@
 <script src="Scripts/Comunes/CRUD.js"></script>
 <script src="Scripts/Clientes.js"></script>
 <script src="Scripts/Mascota.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("formRegistrarMascota").addEventListener("submit", function (event) {
+            event.preventDefault(); // Previene recarga
+            RegistrarMascota();
+        });
+    });
+</script>

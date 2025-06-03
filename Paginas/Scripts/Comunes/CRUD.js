@@ -144,7 +144,7 @@ async function LlenarComboXServicios(URLServicio, ComboLlenar) {
         $(ComboLlenar).empty();
         //Se recorre en un ciclo para llenar el select con la información
         for (i = 0; i < Rpta.length; i++) {
-            $(ComboLlenar).append('<option value=' + Rpta[i].Codigo + '>' + Rpta[i].Nombre + '</option>');
+            $(ComboLlenar).append('<option value=' + Rpta[i].ID + '>' + Rpta[i].Nombre + '</option>');
         }
     }
     catch (error) {

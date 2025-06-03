@@ -43,4 +43,5 @@ async function ObtenerMascotaFiltro(cedula) {
 }
 
 
+
 window.addEventListener("load", ObtenerMascota);
