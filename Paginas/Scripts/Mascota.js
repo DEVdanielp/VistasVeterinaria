@@ -7,7 +7,6 @@ async function ObtenerMascota() {
 
     try {
         const Mascotas = await ConsultarServicio(URL);
-        alert(JSON.stringify(Mascotas));
 
         contenedor.innerHTML = ""; // Limpia lo anterior
 
@@ -29,5 +28,19 @@ async function ObtenerMascota() {
         console.error("Error al obtener usuario:", error);
     }
 }
+
+async function ObtenerMascotaFiltro(cedula) {
+    let URL = URLBase + "api/Mascotas/ConsultarPorPropietario?CedulaPropietario=" + cedula;
+    const contenedor = document.getElementById("listaMascotas");
+
+    try {
+        const Mascotas = await ConsultarServicio(URL);
+        return Mascotas
+
+    } catch (error) {
+        console.error("Error al obtener usuario:", error);
+    }
+}
+
 
 window.addEventListener("load", ObtenerMascota);
