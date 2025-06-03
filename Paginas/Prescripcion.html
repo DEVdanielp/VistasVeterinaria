@@ -215,7 +215,9 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="cboMascota">Mascota:</label>
-                                <select id="cboMascota" class="form-control"></select>
+                                <select id="cboMascota" class="form-control select2" style="width: 100%;">
+                                    <option selected="selected" value="0">Seleccione la mascota</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-6">
@@ -240,10 +242,16 @@
 
                     <div class="section-title"><i class="fas fa-notes-medical"></i> Detalles de la Prescripción</div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="cboMedicamento">Medicamento:</label>
                                 <select id="cboMedicamento" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="cboEmpleado">Empleado:</label>
+                                <select id="cboEmpleado" class="form-control"></select>
                             </div>
                         </div>
                         <div class="col-6">
@@ -276,7 +284,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <button type="button" id="btnEditar" class="btn btn-primary btn-lg btn-block">
+                                <button type="button" id="btn   Editar" class="btn btn-primary btn-lg btn-block">
                                     <i class="fas fa-check-circle"></i> Editar
                                 </button>
                             </div>
@@ -292,16 +300,15 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="tablaDatos" class="table table-bordered table-striped">
+                                <table id="tblPrescripcion" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>NombreMascota</th>
+                                            <th>Raza</th>
+                                            <th>Especie</th>
+                                            <th>Sexo</th>
+                                            <th>Medico</th>
+                                            <th>Medicamento</th>
                                         </tr>
                                     </thead>
                                 </table>
