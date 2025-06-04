@@ -1,8 +1,8 @@
-﻿var BaseURL = "https://localhost:44366/api/";
+﻿var BaseURL = "http://proyectoveterinaria.runasp.net/api/";
 var oTabla = $("#tablaDatos").DataTable();
 jQuery(function () {
     let URL = BaseURL + "Mascotas/LlenarCombo"
-    let URL1 = BaseURL + "Sede/LlenarCombo"
+    let URL1 = BaseURL + "Sedes/LlenarCombo"
     let URL2 = BaseURL + "Empleado/LlenarCombo"
     LlenarTablaCita();
     LlenarComboXServicios(URL, "#cboMascota");
@@ -28,33 +28,25 @@ jQuery(function () {
 });
 
 function LlenarTablaCita() {
+    console.log("Iniciando");
     let URL = BaseURL + "Citas/ObtenerCita";
     LlenarTablaXServicios(URL, "#tblChequeos");
+   
 }
-Ejecu
-class Cita {
-    constructor(ID, ID_Mascota, ID_Empleado, ID_Sede, FechaHora, Estado, TipoCita) {
-        this.ID = ID;
-        this.ID_Mascota = ID_Mascota;
-        this.ID_Empleado = ID_Empleado;
-        this.ID_Sede = ID_Sede;
-        this.FechaHora = FechaHora;
-        this.Estado = Estado;
-        this.TipoCita = TipoCita;
-    }
-}
+
 
 async function RegistrarCita() {
     let URL = BaseURL + "Citas/Insertar";
-    const cita = new Cita(
-        $("#idCita").val(),
-        $("#cboMascota").val(),
-        $("#cboEmpleado").val(),
-        $("#cboSede").val(),
-        $("#FechaCita").val(),
-        $("#EstadoCita").val(),
-        $("#TipCita").val()
-    );
+    const cita = {
+        ID: parseInt($("#idCita").val()),
+        ID_Mascota: parseInt($("#cboMascota").val()),
+        ID_Empleado: parseInt($("#cboEmpleado").val()),
+        ID_Sede: parseInt($("#cboSede").val()),
+        FechaHora: $("#FechaCita").val(),
+        Estado: $("#EstadoCita").val(),
+        TipoCita: $("#TipCita").val()
+    };
+    console.log(cita);
     const Rpta = await EjecutarComandoServicioRptaAuth("POST", URL, cita);
     LlenarTablaCita();
 }
@@ -95,5 +87,5 @@ async function ActualizarCita() {
     LlenarTablaCita();
 }
 
-
+window.addEventListener("load", LlenarTablaCita);
 
