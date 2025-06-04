@@ -16,7 +16,7 @@
         //Se presenta el error en un div de Mensaje
         $("#dvMensaje").html(error);
     }
-}
+}   
 async function EjecutarComandoServicioAuth(Metodo, URLServicio, Objeto) {
     //Se crea un objeto de la clase cliente con los datos de la interfaz
     try {
