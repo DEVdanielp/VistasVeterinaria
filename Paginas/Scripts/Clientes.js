@@ -70,7 +70,7 @@ $('#buscadorClientes').on('input', function () {
 async function verMascotas(cedula, nombreCliente) {
     const mascotas = await ObtenerMascotaFiltro(cedula) || [];
 
-    $('#modalMascotasLabel').text(Mascotas de ${ nombreCliente });
+    $('#modalMascotasLabel').text(Mascotas de ${nombreCliente});
     $('#contenedorMascotas').html('');
 
     if (mascotas.length === 0) {
@@ -94,27 +94,27 @@ async function verMascotas(cedula, nombreCliente) {
 
 function abrirRegistrarMascotaModal(cedulaCliente, nombreCliente) {
 
-    // Limpiar el contenedor de mascotas
-    // Poner el id del cliente en un input oculto del formulario
-    $('#clienteCedula').val(cedulaCliente);
+        // Limpiar el contenedor de mascotas
+        // Poner el id del cliente en un input oculto del formulario
+        $('#clienteCedula').val(cedulaCliente);
 
-    // Cambiar título modal para que incluya nombre cliente
-    $('#modalRegistrarMascotaLabel').text(Registrar mascota para ${ nombreCliente });
+        // Cambiar título modal para que incluya nombre cliente
+        $('#modalRegistrarMascotaLabel').text(Registrar mascota para ${nombreCliente});
 
-    // Limpiar formulario
+        // Limpiar formulario
     $('#formRegistrarMascota')[0].reset();
 
     LlenarComboXServicios(URLBase + "api/Razas/ConsultarTodos", "#idRaza");
 
-    // Mostrar modal
-    const modal = new bootstrap.Modal(document.getElementById('modalRegistrarMascota'));
-    modal.show();
-}
-async function RegistrarMascota() {
+        // Mostrar modal
+        const modal = new bootstrap.Modal(document.getElementById('modalRegistrarMascota'));
+        modal.show();
+    }
+async function RegistrarMascota() { 
     const mascota = {
         ID: parseInt(document.getElementById('idMascota').value),
-        Nombre: document.getElementById('nombreMascota').value,
-        FechaNacimiento: document.getElementById('fechaNacimiento').value,
+        Nombre : document.getElementById('nombreMascota').value,
+        FechaNacimiento : document.getElementById('fechaNacimiento').value,
         Sexo: document.getElementById('sexoMascota').value,
         Id_Raza: parseInt(document.getElementById('idRaza').value),
         ID_Propietario: parseInt(document.getElementById('clienteCedula').value)
