@@ -85,8 +85,8 @@
             object-fit: cover;
             border: 2px solid #4aa8b0;
         }
-        
-        #dvMensaje{
+
+        #dvMensaje {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -96,7 +96,6 @@
             border-radius: 8px;
             display: none; /* Oculto por defecto */
         }
-
     </style>
 </head>
 <body>
@@ -119,6 +118,13 @@
 
         <!-- Div para mostrar mensajes dinámicos -->
         <div id="dvMensaje"></div>
+
+        <!-- Botón para añadir cliente -->
+        <div class="container mb-4">
+            <button data-bs-toggle="modal" data-bs-target="#modalRegistrarCliente">
+                <i class="fas fa-user-plus"></i> Añadir Cliente
+            </button>
+        </div>
 
         <!-- Buscador de clientes -->
         <div class="mb-3">
@@ -205,6 +211,43 @@
                         </div>
 
                         <button type="submit" class="btn btn-success">Guardar Mascota</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para registrar cliente -->
+    <div class="modal fade" id="modalRegistrarCliente" tabindex="-1" aria-labelledby="modalRegistrarClienteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalRegistrarClienteLabel">Registrar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistrarCliente">
+                        <div class="mb-3">
+                            <label for="cedulaCliente" class="form-label">Cédula</label>
+                            <input type="text" class="form-control" id="cedulaCliente" name="cedulaCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombreCliente" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccionCliente" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccionCliente" name="direccionCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefonoCliente" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="telefonoCliente" name="telefonoCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correoCliente" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correoCliente" name="correoCliente" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cliente</button>
                     </form>
                 </div>
             </div>

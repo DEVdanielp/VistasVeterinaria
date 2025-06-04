@@ -70,7 +70,7 @@ $('#buscadorClientes').on('input', function () {
 async function verMascotas(cedula, nombreCliente) {
     const mascotas = await ObtenerMascotaFiltro(cedula) || [];
 
-    $('#modalMascotasLabel').text(`Mascotas de ${nombreCliente}`);
+    $('#modalMascotasLabel').text(Mascotas de ${ nombreCliente });
     $('#contenedorMascotas').html('');
 
     if (mascotas.length === 0) {
@@ -94,28 +94,27 @@ async function verMascotas(cedula, nombreCliente) {
 
 function abrirRegistrarMascotaModal(cedulaCliente, nombreCliente) {
 
-        // Limpiar el contenedor de mascotas
-        // Poner el id del cliente en un input oculto del formulario
-        $('#clienteCedula').val(cedulaCliente);
+    // Limpiar el contenedor de mascotas
+    // Poner el id del cliente en un input oculto del formulario
+    $('#clienteCedula').val(cedulaCliente);
 
-        // Cambiar título modal para que incluya nombre cliente
-        $('#modalRegistrarMascotaLabel').text(`Registrar mascota para ${nombreCliente}`);
+    // Cambiar título modal para que incluya nombre cliente
+    $('#modalRegistrarMascotaLabel').text(Registrar mascota para ${ nombreCliente });
 
-        // Limpiar formulario
+    // Limpiar formulario
     $('#formRegistrarMascota')[0].reset();
 
     LlenarComboXServicios(URLBase + "api/Razas/ConsultarTodos", "#idRaza");
 
-        // Mostrar modal
-        const modal = new bootstrap.Modal(document.getElementById('modalRegistrarMascota'));
-        modal.show();
-    }
-
-async function RegistrarMascota() { 
+    // Mostrar modal
+    const modal = new bootstrap.Modal(document.getElementById('modalRegistrarMascota'));
+    modal.show();
+}
+async function RegistrarMascota() {
     const mascota = {
         ID: parseInt(document.getElementById('idMascota').value),
-        Nombre : document.getElementById('nombreMascota').value,
-        FechaNacimiento : document.getElementById('fechaNacimiento').value,
+        Nombre: document.getElementById('nombreMascota').value,
+        FechaNacimiento: document.getElementById('fechaNacimiento').value,
         Sexo: document.getElementById('sexoMascota').value,
         Id_Raza: parseInt(document.getElementById('idRaza').value),
         ID_Propietario: parseInt(document.getElementById('clienteCedula').value)
@@ -125,6 +124,25 @@ async function RegistrarMascota() {
     const modal = new bootstrap.Modal(document.getElementById('modalRegistrarMascota'));
     modal.hide();
 }
+
+document.getElementById("formRegistrarCliente").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const cliente = {
+        cedula: parseInt(document.getElementById("cedulaCliente").value),
+        nombre: document.getElementById("nombreCliente").value,
+        direccion: document.getElementById("direccionCliente").value,
+        telefono: parseInt(document.getElementById("telefonoCliente").value),
+        correo: document.getElementById("correoCliente").value
+    };
+    console.log("Iniciando")
+    EjecutarComandoServicioRpta("POST", URLBase + "api/Propietarios/Insertar", cliente)
+        .then(() => {
+            location.reload(); // 🔄 Recarga la pestaña completa
+        })
+        .catch(error => console.error("Error al registrar cliente:", error));
+});
+
 
 // Ejecutar al cargar la página
 window.addEventListener("load", ObtenerUsuarios);
