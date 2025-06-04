@@ -235,7 +235,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="txtPropietario">Propietario:</label>
-                                <input type="text" class="form-control" id="txtEdad" readonly>
+                                <input type="text" class="form-control" id="txtPropietario" readonly>
                             </div>
                         </div>
                     </div>
@@ -268,55 +268,41 @@
                         </div>
                     </div>
                     <div class="row" style="margin-top: 30px;">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <button type="button" id="btnGuardar" class="btn btn-primary btn-lg btn-block">
                                     <i class="fas fa-check-circle"></i> Guardar Prescripción
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <button type="button" id="btnBuscar" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-check-circle"></i> Buscar Prescripcion
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <button type="button" id="btnEditar" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-check-circle"></i> Editar
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <button type="button" id="btnCancelar" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-check-circle"></i> Cancelar
+                                <button type="button" id="btnLimpiar" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-check-circle"></i> Limpiar
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table id="tblPrescripcion" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>NombreMascota</th>
-                                            <th>Raza</th>
-                                            <th>Especie</th>
-                                            <th>Sexo</th>
-                                            <th>Medico</th>
-                                            <th>Medicamento</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
+                    <div class="col-md-12">
+                        <div style="overflow-x:auto;">
+                            <table id="tblPrescripcion" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>NombreMascota</th>
+                                        <th>Raza</th>
+                                        <th>Especie</th>
+                                        <th>Propietario</th>
+                                        <th>Medico</th>
+                                        <th>Medicamento</th>
+                                        <th>Fecha</th>
+                                        <th>Cantidad</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                </form>
-            </div>
-
+                    </div>
             <footer>
                 &copy; 2025 Centro Veterinario Huellitas. Todos los derechos reservados.
             </footer>
