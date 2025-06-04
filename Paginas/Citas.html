@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro de Chequeo General</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="Estilos/adminlte.min.css" rel="stylesheet" />
+    <link href="Estilos/all.min.css" rel="stylesheet" />
+
+    <link href="Estilos/select2.min.css" rel="stylesheet" />
+    <link href="Estilos/select2-bootstrap4.min.css" rel="stylesheet" />
+
+    <link href="Estilos/dataTables.min.css" rel="stylesheet" />
+    <link href="Estilos/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="Estilos/adminlte.min.css" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e6f7f9;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #5ebec4;
+            color: black;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav h2 {
+            font-size: 22px;
+            color: black;
+            margin: 0;
+            text-align: left;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+            nav a:hover {
+                background-color: #4aa8b0;
+            }
+
+            nav a i {
+                margin-right: 6px;
+            }
+
+        main {
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+            header img {
+                height: 80px;
+            }
+
+            header h1 {
+                color: #357a85;
+                margin: 10px 0 0;
+            }
+
+        .section-title {
+            color: #357a85;
+            border-bottom: 2px solid #8fd0d4;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #357a85;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .col-6 {
+            flex: 0 0 48%;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+        }
+
+        .btn {
+            background-color: #4aa8b0;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            .btn:hover {
+                background-color: #3a9098;
+            }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <section class="content">
+
+        <nav>
+            <h2><i class="fas fa-paw"></i> Huellitas</h2>
+            <div class="nav-container">
+                <div class="nav-links">
+                    <a href="#"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="#"><i class="fas fa-user-md"></i> Veterinarios</a>
+                    <a href="#"><i class="fas fa-dog"></i> Mascotas</a>
+                    <a href="#"><i class="fas fa-pills"></i> Medicamentos</a>
+                    <a href="#"><i class="fas fa-calendar-check"></i> Cita</a>
+                    <a href="#"><i class="fas fa-file-medical"></i> Prescripciones</a>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <div class="container">
+                <header>
+                    <h1>Registro de Cita</h1>
+                </header>
+
+                <form id="frmChequeoGeneral">
+                    <div class="section-title"><i class="fas fa-info-circle"></i> Datos del Chequeo</div>
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="idCita" class="form-label">ID Cita</label>
+                            <input type="text" class="form-control" id="idCita" name="idCita" required />
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="cboMascota">Mascota</label>
+                                <select id="cboMascota" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="cboEmpleado">Empleado</label>
+                                <select id="cboEmpleado" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="cboSede">Sede</label>
+                                <select id="cboSede" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="FechaCita" class="form-label">Fecha y hora</label>
+                            <input type="datetime-local" class="form-control" id="FechaCita" name="FechaCita" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="EstadoCita" class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="EstadoCita" name="EstadoCita" required  />
+                        </div>
+                        <div class="mb-3">
+                            <label for="TipCita" class="form-label">Tipo de cita</label>
+                            <input type="text" class="form-control" id="TipCita" name="TipCita" required>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" id="btnGuardarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-check-circle"></i> Registrar Cita
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" id="btnBuscarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-search"></i> Buscar Cita
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" id="btnEditarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-edit"></i> Editar Cita
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="button" id="btnEliminarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-times-circle"></i> Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tblChequeos" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID Cita</th>
+                                        <th>Mascota</th>
+                                        <th>Empleado</th>
+                                        <th>Sede</th>
+                                        <th>Fecha y Hora</th>
+                                        <th>Estado</th>
+                                        <th>Tipo de cita</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <footer>
+                &copy; 2025 Centro Veterinario Huellitas. Todos los derechos reservados.
+            </footer>
+        </main>
+    </section>
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/select2.min.js"></script>
+    <script src="Scripts/Comunes/Combos.js"></script>
+    <script src="../Scripts/jquery.dataTables.min.js"></script>
+    <script src="../Scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="Scripts/Comunes/Tablas.js"></script>
+    <script src="Scripts/Citas.js"></script>
+</body>
+</html>
