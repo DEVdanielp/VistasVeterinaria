@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Metadatos y configuración -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lista de Clientes - Veterinaria</title>
@@ -11,14 +10,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 
-    <!-- Estilos personalizados -->
     <style>
         body {
             background-color: #e6f7f9;
             font-family: 'Roboto', sans-serif;
         }
 
-        /* Barra de navegación */
         nav {
             background-color: #5ebec4;
             padding: 15px 30px;
@@ -62,12 +59,10 @@
                 margin-right: 6px;
             }
 
-        /* Tabla y contenedor */
         .container {
             margin-top: 30px;
         }
 
-        /* Estilo para tarjetas de mascotas en el modal */
         .modal-body .pet-card {
             background-color: #f1fafa;
             padding: 15px;
@@ -91,10 +86,10 @@
             top: 20px;
             right: 20px;
             min-width: 250px;
-            z-index: 1055; /* Por encima del modal y otros elementos */
+            z-index: 1055;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             border-radius: 8px;
-            display: none; /* Oculto por defecto */
+            display: none;
         }
     </style>
 </head>
@@ -108,27 +103,25 @@
                 <a href="General.html"><i class="fas fa-home"></i> Inicio</a>
                 <a href="Clientes.html"><i class="fas fa-dog"></i> Clientes</a>
                 <a href="Prescripcion.html"><i class="fas fa-pills"></i> Prescribir</a>
-                <a href="Factura.html"><i class="fas fa-pills"></i> Emitir Factura</a>
+                <a href="Factura.html"><i class="fas fa-file-invoice"></i> Emitir Factura</a>
                 <a href="Login.html"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
             </div>
         </div>
     </nav>
 
-    <!-- Contenido principal -->
     <div class="container">
         <h3 class="text-primary mb-4">Clientes Registrados</h3>
 
-        <!-- Div para mostrar mensajes dinámicos -->
         <div id="dvMensaje"></div>
 
-        <!-- Botón para añadir cliente -->
-        <div class="container mb-4">
-            <button data-bs-toggle="modal" data-bs-target="#modalRegistrarCliente">
+        <!-- Botón para abrir modal registrar cliente -->
+        <div class="mb-4">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistrarCliente">
                 <i class="fas fa-user-plus"></i> Añadir Cliente
             </button>
         </div>
 
-        <!-- Buscador de clientes -->
+        <!-- Buscador -->
         <div class="mb-3">
             <input type="text" id="buscadorClientes" class="form-control" placeholder="Buscar por nombre, correo o teléfono...">
         </div>
@@ -137,27 +130,64 @@
         <table class="table table-bordered table-striped bg-white shadow-sm">
             <thead class="table-info">
                 <tr>
-                    <th>Cedula</th>
+                    <th>Cédula</th>
                     <th>Nombre</th>
-                    <th>Direcciòn</th>
-                    <th>Telefono</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
                     <th>Correo</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="tablaClientes">
-                <!-- Aquí se insertan los clientes dinámicamente -->
+                <!-- Clientes dinámicos -->
             </tbody>
         </table>
     </div>
 
-    <!-- Modal para mostrar las mascotas del cliente -->
+    <!-- Modal Registrar Cliente -->
+    <div class="modal fade" id="modalRegistrarCliente" tabindex="-1" aria-labelledby="modalRegistrarClienteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalRegistrarClienteLabel">Registrar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistrarCliente">
+                        <div class="mb-3">
+                            <label for="cedulaCliente" class="form-label">Cédula</label>
+                            <input type="text" class="form-control" id="cedulaCliente" name="cedulaCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombreCliente" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccionCliente" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccionCliente" name="direccionCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefonoCliente" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="telefonoCliente" name="telefonoCliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correoCliente" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correoCliente" name="correoCliente" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mascotas -->
     <div class="modal fade" id="modalMascotas" tabindex="-1" aria-labelledby="modalMascotasLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-info text-white">
                     <h5 class="modal-title" id="modalMascotasLabel">Mascotas del Cliente</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body" id="contenedorMascotas">
                     <!-- Aquí se cargan las mascotas -->
@@ -166,15 +196,13 @@
         </div>
     </div>
 
-    <!-- Modal para registrar mascota -->
+    <!-- Modal Registrar Mascota -->
     <div class="modal fade" id="modalRegistrarMascota" tabindex="-1" aria-labelledby="modalRegistrarMascotaLabel" aria-hidden="true">
-
-
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title" id="modalRegistrarMascotaLabel">Registrar Mascota</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <form id="formRegistrarMascota">
@@ -208,7 +236,7 @@
                             <label for="idRaza" class="form-label">Raza</label>
                             <select class="form-select" id="idRaza" name="idRaza" required>
                                 <option value="" selected disabled>Seleccione raza</option>
-                                <!-- Aquí se insertan opciones dinámicas -->
+                                <!-- Opciones dinámicas -->
                             </select>
                         </div>
 
@@ -219,56 +247,30 @@
         </div>
     </div>
 
-    <!-- Modal para registrar cliente -->
-    <div class="modal fade" id="modalRegistrarCliente" tabindex="-1" aria-labelledby="modalRegistrarClienteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="modalRegistrarClienteLabel">Registrar Cliente</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formRegistrarCliente">
-                        <div class="mb-3">
-                            <label for="cedulaCliente" class="form-label">Cédula</label>
-                            <input type="text" class="form-control" id="cedulaCliente" name="cedulaCliente" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nombreCliente" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="direccionCliente" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccionCliente" name="direccionCliente" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefonoCliente" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefonoCliente" name="telefonoCliente" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correoCliente" class="form-label">Correo</label>
-                            <input type="email" class="form-control" id="correoCliente" name="correoCliente" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cliente</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Tus scripts aquí -->
+    <script src="Scripts/Comunes/CRUD.js"></script>
+    <script src="Scripts/Clientes.js"></script>
+    <script src="Scripts/Mascota.js"></script>
 
+    <script>
+        // Ejemplo: captura de envío del formulario de mascota para evitar recarga y llamar función JS
+        document.addEventListener("DOMContentLoaded", () => {
+            const formMascota = document.getElementById("formRegistrarMascota");
+            formMascota.addEventListener("submit", function (event) {
+                event.preventDefault();
+                RegistrarMascota(); // Define esta función en Mascota.js
+            });
+
+            const formCliente = document.getElementById("formRegistrarCliente");
+            formCliente.addEventListener("submit", function (event) {
+                event.preventDefault();
+                RegistrarCliente(); // Define esta función en Clientes.js
+            });
+        });
+    </script>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="Scripts/Comunes/CRUD.js"></script>
-<script src="Scripts/Clientes.js"></script>
-<script src="Scripts/Mascota.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("formRegistrarMascota").addEventListener("submit", function (event) {
-            event.preventDefault(); // Previene recarga
-            RegistrarMascota();
-        });
-    });
-</script>
