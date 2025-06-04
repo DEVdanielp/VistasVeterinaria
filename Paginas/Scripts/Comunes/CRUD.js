@@ -16,7 +16,7 @@
         //Se presenta el error en un div de Mensaje
         $("#dvMensaje").html(error);
     }
-}
+}   
 async function EjecutarComandoServicioAuth(Metodo, URLServicio, Objeto) {
     //Se crea un objeto de la clase cliente con los datos de la interfaz
     try {
@@ -201,6 +201,16 @@ async function LlenarTablaXServicios(URLServicio, TablaLlenar) {
                 title: NombreColumnas[i]
             });
         }
+        Columnas.push({
+            title: "Acciones",
+            data: null,
+            render: function (data, type, row) {
+                return `
+        <button class="btn btn-warning" style="padding: 2px 6px; font-size: 12px;" onclick="EditarPrescripcion(${row.ID})">✏️</button>
+        <button class="btn btn-danger" style="padding: 2px 6px; font-size: 12px;" onclick="EliminarPrescripcion(${row.ID})">🗑️</button>
+            `;
+            }
+        });
         //Llena los datos
         $(TablaLlenar).DataTable({
             data: Rpta,
@@ -264,3 +274,4 @@ function getCookie(cname) {
     }
     return "";
 }
+

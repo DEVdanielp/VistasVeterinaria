@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Prescripción Veterinaria</title>
+    <title>Registro de Chequeo General</title>
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link href="Estilos/adminlte.min.css" rel="stylesheet" />
     <link href="Estilos/all.min.css" rel="stylesheet" />
 
-    <!-- Select2 -->
     <link href="Estilos/select2.min.css" rel="stylesheet" />
     <link href="Estilos/select2-bootstrap4.min.css" rel="stylesheet" />
 
-    <!--Estilos para las tablas(datatables)-->
     <link href="Estilos/dataTables.min.css" rel="stylesheet" />
     <link href="Estilos/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="Estilos/adminlte.min.css" rel="stylesheet" />
@@ -132,17 +128,12 @@
 
         input[type="text"],
         input[type="date"],
-        select,
-        textarea {
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 14px;
-        }
-
-        textarea {
-            resize: vertical;
         }
 
         .row {
@@ -185,7 +176,6 @@
 <body>
     <section class="content">
 
-        <!-- Menú horizontal -->
         <nav>
             <h2><i class="fas fa-paw"></i> Huellitas</h2>
             <div class="nav-container">
@@ -195,133 +185,120 @@
                     <a href="#"><i class="fas fa-dog"></i> Mascotas</a>
                     <a href="#"><i class="fas fa-pills"></i> Medicamentos</a>
                     <a href="#"><i class="fas fa-calendar-check"></i> Cita</a>
-                    <a href="#"><i class="fas fa-concierge-bell"></i> Servicio Adicional</a>
                     <a href="#"><i class="fas fa-file-medical"></i> Prescripciones</a>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                 </div>
             </div>
         </nav>
 
-        <!-- Contenido principal -->
         <main>
             <div class="container">
                 <header>
-                    <h1>Prescripción Medicamento</h1>
+                    <h1>Registro de Cita</h1>
                 </header>
 
-                <form id="frmPrescripcion">
-                    <div class="section-title"><i class="fas fa-dog"></i> Datos del Paciente</div>
+                <form id="frmChequeoGeneral">
+                    <div class="section-title"><i class="fas fa-info-circle"></i> Datos del Chequeo</div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="mb-3">
+                            <label for="idCita" class="form-label">ID Cita</label>
+                            <input type="text" class="form-control" id="idCita" name="idCita" required />
+                        </div>
+                        <div class="col-3">
                             <div class="form-group">
-                                <label for="cboMascota">Mascota:</label>
-                                <select id="cboMascota" class="form-control select2" style="width: 100%;">
-                                    <option selected="selected" value="0">Seleccione la mascota</option>
-                                </select>
+                                <label for="cboMascota">Mascota</label>
+                                <select id="cboMascota" class="form-control"></select>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-3">
                             <div class="form-group">
-                                <label for="txtEspecie">Especie:</label>
-                                <input type="text" class="form-control" id="txtEspecie" readonly>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txtRaza">Raza:</label>
-                                <input type="text" class="form-control" id="txtRaza" readonly>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="txtPropietario">Propietario:</label>
-                                <input type="text" class="form-control" id="txtPropietario" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-title"><i class="fas fa-notes-medical"></i> Detalles de la Prescripción</div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="cboMedicamento">Medicamento:</label>
-                                <select id="cboMedicamento" class="form-control"></select>
-                            </div>  
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="cboEmpleado">Empleado:</label>
+                                <label for="cboEmpleado">Empleado</label>
                                 <select id="cboEmpleado" class="form-control"></select>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-3">
                             <div class="form-group">
-                                <label for="fechaPrescripcion">Fecha de prescripción:</label>
-                                <input type="date" id="fechaPrescripcion" class="form-control" />
+                                <label for="cboSede">Sede</label>
+                                <select id="cboSede" class="form-control"></select>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="Cantidad">Cantidad:</label>
-                                <input type="text" id="Cantidad" class="form-control" placeholder="Ej. 20 ml" />
-                            </div>
+                        <div class="mb-3">
+                            <label for="FechaCita" class="form-label">Fecha y hora</label>
+                            <input type="datetime-local" class="form-control" id="FechaCita" name="FechaCita" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="EstadoCita" class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="EstadoCita" name="EstadoCita" required  />
+                        </div>
+                        <div class="mb-3">
+                            <label for="TipCita" class="form-label">Tipo de cita</label>
+                            <input type="text" class="form-control" id="TipCita" name="TipCita" required>
                         </div>
                     </div>
                     <div class="row" style="margin-top: 30px;">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <button type="button" id="btnGuardar" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-check-circle"></i> Guardar Prescripción
+                                <button type="button" id="btnGuardarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-check-circle"></i> Registrar Cita
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <button type="button" id="btnLimpiar" class="btn btn-primary btn-lg btn-block">
-                                    <i class="fas fa-check-circle"></i> Limpiar
+                                <button type="button" id="btnBuscarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-search"></i> Buscar Cita
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" id="btnEditarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-edit"></i> Editar Cita
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="button" id="btnEliminarCita" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-times-circle"></i> Eliminar
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
-                        <div style="overflow-x:auto;">
-                            <table id="tblPrescripcion" class="table table-bordered table-striped">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tblChequeos" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>NombreMascota</th>
-                                        <th>Raza</th>
-                                        <th>Especie</th>
-                                        <th>Propietario</th>
-                                        <th>Medico</th>
-                                        <th>Medicamento</th>
-                                        <th>Fecha</th>
-                                        <th>Cantidad</th>
-                                        <th>Acciones</th>
+                                        <th>ID Cita</th>
+                                        <th>Mascota</th>
+                                        <th>Empleado</th>
+                                        <th>Sede</th>
+                                        <th>Fecha y Hora</th>
+                                        <th>Estado</th>
+                                        <th>Tipo de cita</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>
+                </form>
+            </div>
+
             <footer>
                 &copy; 2025 Centro Veterinario Huellitas. Todos los derechos reservados.
             </footer>
         </main>
     </section>
-    <!-- Para los script de uso -->
     <script src="../Scripts/jquery-3.4.1.js"></script>
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
-    <!-- Select2 -->
     <script src="../Scripts/select2.min.js"></script>
     <script src="Scripts/Comunes/Combos.js"></script>
-    <!-- Tabla -->
     <script src="../Scripts/jquery.dataTables.min.js"></script>
     <script src="../Scripts/dataTables.bootstrap4.min.js"></script>
-    <!--Librerías comunes de JavaScript para las Tablas -->
     <script src="Scripts/Comunes/Tablas.js"></script>
-    <!-- Impresión -->
-    <!-- Para el script de control del form -->
-    <script src="Scripts/Prescripcion.js"></script>
-    <script src="Scripts/Comunes/CRUD.js"></script>
+    <script src="Scripts/Citas.js"></script>
 </body>
 </html>
