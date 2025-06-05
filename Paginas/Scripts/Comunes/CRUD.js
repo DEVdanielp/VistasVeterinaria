@@ -209,7 +209,6 @@ async function LlenarTablaXServicios(URLServicio, TablaLlenar) {
             render: function (data, type, row) {
                 return `
         <button class="btn btn-warning" style="padding: 2px 6px; font-size: 12px;" onclick="EditarPrescripcion(${row.ID})">✏️</button>
-        <button class="btn btn-danger" style="padding: 2px 6px; font-size: 12px;" onclick="EliminarPrescripcion(${row.ID})">🗑️</button>
             `;
             }
         });

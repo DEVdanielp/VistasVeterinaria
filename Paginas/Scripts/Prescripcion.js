@@ -57,6 +57,10 @@ jQuery(function () {
             document.getElementById("txtRaza").value = "Error";
             document.getElementById("txtEspecie").value = "Error";
         }
+        document.getElementById("btnLimpiar").addEventListener("click", function () {
+            LimpiarCampos();
+        });
+
     });
 
 
@@ -98,4 +102,26 @@ document.getElementById("btnGuardar").addEventListener("click", async function (
         console.error("Error al registrar la prescripción:", error);
     }
 });
+
+
+function LimpiarCampos() {
+    // Limpiar select
+    $('#cboPropietario').val('');
+    $('#cboMascotas').val('');
+    $('#cboMedicamento').val('');
+    $('#cboEmpleado').val('');
+
+    // Limpiar inputs de texto
+    $('#txtRaza').val('');
+    $('#txtEspecie').val('');
+    $('#Cantidad').val('');
+
+    // Limpiar fecha (si quieres restaurarla al día actual)
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaLocal = `${yyyy}-${mm}-${dd}`;
+    $('#fechaPrescripcion').val(fechaLocal);
+}
 
