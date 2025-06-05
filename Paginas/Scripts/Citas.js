@@ -39,9 +39,9 @@ async function LlenarTablaCita() {
             $('#tblChequeos').append(`
                 <tr>
                     <td>${cita.ID}</td>
-                    <td>${cita.ID_Mascota}</td>
-                    <td>${cita.ID_Empleado}</td>
-                    <td>${cita.ID_Sede}</td>
+                    <td>${cita.MascotaN}</td>
+                    <td>${cita.EmpleadoN}</td>
+                    <td>${cita.SedeN}</td>
                     <td>${cita.FechaHora}</td>
                     <td>${cita.TipoCita}</td>
                 </tr>
