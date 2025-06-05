@@ -40,8 +40,7 @@ async function ObtenerFacturas() {
 
 async function llenarCombo() {
     LlenarComboXServicios(URLBase + "api/Propietarios/LlenarCombo", "#clienteFactura");
-    LlenarComboXServicios(URLBase + "api/Combos/LlenarComboCirugia", "#cirugia");
-    LlenarComboXServicios(URLBase + "api/Combos/LlenarComboCita", "#cita");
+    LlenarComboXServicios(URLBase + "api/ProductoFarmacia/LlenarCombo", "#selectServicio");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
