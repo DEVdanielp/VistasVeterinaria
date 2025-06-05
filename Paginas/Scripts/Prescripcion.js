@@ -1,5 +1,5 @@
-﻿var BaseURL = "https://localhost:44366/";
-var BaseURL1 = "https://localhost:44366/";
+﻿var BaseURL = "http://proyectoveterinaria.runasp.net/";
+var BaseURL1 = "http://proyectoveterinaria.runasp.net/";
 var oTabla = $("#tablaDatos").DataTable();
 
 jQuery(function () {
