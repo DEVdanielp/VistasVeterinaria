@@ -27,11 +27,32 @@ jQuery(function () {
 
 });
 
-function LlenarTablaCita() {
-    console.log("Iniciando");
-    let URL = BaseURL + "Citas/ObtenerCita";
-    LlenarTablaXServicios(URL, "#tblChequeos");
-   
+async function LlenarTablaCita() {
+    let URL = BaseURL + "Citas/ConsultarTodos";
+
+    try {
+        lista = await ConsultarServicio(URL);
+
+        $('#tblChequeos').html('');
+        
+        lista.forEach(cita => {
+            $('#tblChequeos').append(`
+                <tr>
+                    <td>${cita.ID}</td>
+                    <td>${cita.ID_Mascota}</td>
+                    <td>${cita.ID_Empleado}</td>
+                    <td>${cita.ID_Sede}</td>
+                    <td>${cita.FechaHora}</td>
+                    <td>${cita.TipoCita}</td>
+                </tr>
+            `);
+
+            console.log(JSON.stringify(cita))
+
+        });
+    } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+    }
 }
 
 
