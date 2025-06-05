@@ -108,23 +108,41 @@
 
     <!-- Modal Nueva Factura -->
     <div class="modal fade" id="modalNuevaFactura" tabindex="-1" aria-labelledby="modalNuevaFacturaLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <form id="formNuevaFactura" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalNuevaFacturaLabel">Crear Nueva Factura</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+
                     <div class="mb-3">
                         <label for="idFactura" class="form-label">ID Factura</label>
                         <input type="text" class="form-control" id="idFactura" required />
                     </div>
+
                     <div class="mb-3">
                         <label for="clienteFactura" class="form-label">Cliente</label>
-                        <select id="clienteFactura" class="form-select" required>
-                        </select>
+                        <select id="clienteFactura" class="form-select" required></select>
                     </div>
-                    <input type="hidden" id="idFacturaModal" value="" />
+
+                    <hr />
+
+                    <h5>Detalle de la factura</h5>
+
+                    <div class="row align-items-end mb-3 g-2">
+                        <div class="col-md-6">
+                            <label for="selectServicio" class="form-label">Servicio</label>
+                            <select id="selectServicio" class="form-select" required>
+                                <option value="">Seleccione un servicio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="precioServicio" class="form-label">Precio</label>
+                            <input type="text" class="form-control" id="precioServicio" disabled />
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success" type="submit">Guardar Factura</button>
@@ -133,106 +151,374 @@
         </div>
     </div>
 
-    <!-- Modal Ver Detalles -->
-    <div class="modal fade" id="modalDetallesFactura" tabindex="-1" aria-labelledby="modalDetallesFacturaLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Detalles de Factura</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Detalles simulados de factura. Aquí irían productos o servicios facturados.</p>
-                    <button class="btn btn-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modalAgregarDetalle">
-                        <i class="fas fa-plus"></i> Añadir Detalle
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Agregar Detalle -->
-    <div class="modal fade" id="modalAgregarDetalle" tabindex="-1" aria-labelledby="modalAgregarDetalleLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="formAgregarDetalle" class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAgregarDetalleLabel">Añadir Detalle a la Factura</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="mb-3">
-                        <label for="idDetalle" class="form-label">ID Factura</label>
-                        <input type="text" class="form-control" id="idDetalle" required />
-                    </div>
-
-                    <!-- Dropdown 1 -->
-                    <div class="mb-3">
-                        <label for="cirugia" class="form-label">Servicio</label>
-                        <select id="cirugia" class="form-select dropdown-servicio">
-                        </select>
-                    </div>
-
-                    <!-- Dropdown 2 -->
-                    <div class="mb-3">
-                        <label for="cita" class="form-label">Cita</label>
-                        <select id="cita" class="form-select dropdown-servicio">
-                        </select>
-                    </div>
-
-                    <input type="hidden" id="idFacturaModal" name="idFacturaModal" value="" /> <!--ID HIDDEN-->
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-check"></i> Añadir
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
     <script src="Scripts/Comunes/CRUD.js"></script>
     <script src="Scripts/Facturas.js"></script>
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Cargar clientes para el select principal
+            await LlenarComboXServicios("http://proyectoveterinaria.runasp.net/api/Propietarios/LlenarCombo", "#clienteFactura");
+
+            // Botón para agregar nuevo detalle
+            const btnAgregarDetalle = document.getElementById("btnAgregarDetalle");
+            const detallesContainer = document.getElementById("detallesContainer");
+            const templateDetalle = document.getElementById("templateDetalle");
+
+            btnAgregarDetalle.addEventListener("click", async () => {
+                // Clonar plantilla
+                const clone = templateDetalle.content.cloneNode(true);
+                const selectServicio = clone.querySelector(".servicio");
+                llenarCombo();
+                const inputPrecio = clone.querySelector(".precio");
+                const btnEliminar = clone.querySelector(".btn-eliminar-detalle");
+
+                // Cargar servicios en el select del detalle
+                await LlenarComboXServicios("http://proyectoveterinaria.runasp.net/api/Combos/LlenarComboCirugia", selectServicio);
+
+                // Cuando cambie el servicio, actualizar el precio
+                selectServicio.addEventListener("change", async () => {
+                    if (selectServicio.value === "") {
+                        inputPrecio.value = "";
+                        return;
+                    }
+                    // Obtener el precio del servicio desde la API o dataset
+                    try {
+                        // Suponemos que el select tiene data-precio en las opciones
+                        const opcionSeleccionada = selectServicio.selectedOptions[0];
+                        const precio = opcionSeleccionada.getAttribute("data-precio") || "";
+                        inputPrecio.value = precio;
+                    } catch {
+                        inputPrecio.value = "";
+                    }
+                });
+
+                // Botón para eliminar detalle
+                btnEliminar.addEventListener("click", () => {
+                    clone.querySelector(".detalle-factura").remove();
+                    // Pero el clone está fuera del DOM, hay que eliminar del contenedor
+                    btnEliminar.closest(".detalle-factura").remove();
+                });
+
+                detallesContainer.appendChild(clone);
+            });
+
+            // Manejar envío del formulario
+            document.getElementById("formNuevaFactura").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const idFactura = document.getElementById("idFactura").value.trim();
+                const idCliente = document.getElementById("clienteFactura").value;
+
+                if (!idFactura || !idCliente) {
+                    alert("Por favor, complete el ID de factura y seleccione un cliente.");
+                    return;
+                }
+
+                // Construir el objeto factura con detalles
+                const detalles = [];
+                const detalleDivs = detallesContainer.querySelectorAll(".detalle-factura");
+                if (detalleDivs.length === 0) {
+                    alert("Agregue al menos un detalle a la factura.");
+                    return;
+                }
+
+                for (const detalleDiv of detalleDivs) {
+                    const servicioSelect = detalleDiv.querySelector(".servicio");
+                    const precioInput = detalleDiv.querySelector(".precio");
+
+                    if (!servicioSelect.value) {
+                        alert("Seleccione un servicio para todos los detalles.");
+                        return;
+                    }
+
+                    detalles.push({
+                        ID_Cirugia: parseInt(servicioSelect.value),
+                        PrecioUnitario: parseFloat(precioInput.value) || 0,
+                        ID_Hospitalizacion: null,
+                        ID_ProductoFarmacia: null,
+                        ID_ServicioAdicional: null
+                    });
+                }
+
+                // Calcular total
+                const total = detalles.reduce((sum, d) => sum + d.PrecioUnitario, 0);
+
+                const factura = {
+                    ID: parseInt(idFactura),
+                    ID_Cliente: parseInt(idCliente),
+                    Fecha: new Date().toISOString(),
+                    Total: total,
+                    Detalles: detalles
+                };
+
+                try {
+                    // Aquí debes adaptar la llamada al backend que acepte factura con detalles en el mismo objeto
+                    // Si el backend no soporta, se debe modificar para que acepte este objeto
+                    await EjecutarComandoServicioRpta("POST", "http://proyectoveterinaria.runasp.net/api/Facturas", factura);
+
+                    alert("Factura creada correctamente.");
+                    // Cerrar modal y resetear formulario
+                    const modalNuevaFactura = bootstrap.Modal.getInstance(document.getElementById("modalNuevaFactura"));
+                    modalNuevaFactura.hide();
+                    e.target.reset();
+                    detallesContainer.innerHTML = "";
+
+                    // Recargar tabla de facturas
+                    CargarTablaFacturas();
+                } catch (error) {
+                    alert("Error al crear la factura: " + error.message);
+                }
+            });
+
+            // Función para llenar combos con servicios desde API
+            async function LlenarComboXServicios(url, selector) {
+                try {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error("Error al cargar datos");
+                    const data = await res.json();
+
+                    let selectElement;
+                    if (typeof selector === "string") {
+                        selectElement = document.querySelector(selector);
+                    } else {
+                        selectElement = selector;
+                    }
+
+                    selectElement.innerHTML = '<option value="">Seleccione...</option>';
+
+                    data.forEach(item => {
+                        const option = document.createElement("option");
+                        option.value = item.ID;
+                        option.textContent = item.Nombre;
+                        // Asumimos que item tiene Precio para servicios
+                        if (item.Precio) option.setAttribute("data-precio", item.Precio);
+                        selectElement.appendChild(option);
+                    });
+                } catch (err) {
+                    console.error("Error al cargar combo: ", err);
+                }
+            }
+
+            // Función para cargar la tabla de facturas (ejemplo simple)
+            async function CargarTablaFacturas() {
+                try {
+                    const res = await fetch("http://proyectoveterinaria.runasp.net/api/Facturas");
+                    if (!res.ok) throw new Error("Error al cargar facturas");
+                    const facturas = await res.json();
+
+                    const tbody = document.getElementById("tablaFacturas");
+                    tbody.innerHTML = "";
+
+                    facturas.forEach(factura => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                                        <td>${factura.ID}</td>
+                                        <td>${new Date(factura.Fecha).toLocaleDateString()}</td>
+                                        <td>${factura.ClienteNombre || factura.ID_Cliente}</td>
+                                        <td>${factura.Total.toFixed(2)}</td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm" title="Eliminar factura">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    `;
+                        tbody.appendChild(tr);
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            // Cargar facturas inicialmente
+            CargarTablaFacturas();
+
+        });
+
+        function generarIdFactura() {
+            const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            // Generar 5 dígitos numéricos
+            const numeros = Math.floor(10000 + Math.random() * 90000);
+
+            // Generar 2 letras aleatorias
+            const letra1 = letras.charAt(Math.floor(Math.random() * letras.length));
+            const letra2 = letras.charAt(Math.floor(Math.random() * letras.length));
+
+            // Combinar todo (puedes cambiar el orden si deseas)
+            return `${numeros}${letra1}${letra2}`;
+        }
+
+
+        const modalNuevaFactura = document.getElementById("modalNuevaFactura");
+        modalNuevaFactura.addEventListener("show.bs.modal", () => {
+            document.getElementById("idFactura").value = generarIdFactura();
+        });
+
+
+        document.getElementById("selectServicio").addEventListener("change", async function () {
+            const idSeleccionado = this.value;  // 'this' es el select
+
+            try {
+                // Suponiendo ConsultarServicio es una función async que devuelve el precio
+                const precio = await ConsultarServicio("http://proyectoveterinaria.runasp.net/api/ProductoFarmacia/consultar?id=" + idSeleccionado);
+
+                alert(JSON.stringify(precio));
+
+                if (precio) {
+                    document.getElementById("precioServicio").value = precio;
+                } else {
+                    document.getElementById("precioServicio").value = "";
+                }
+            } catch (error) {
+                console.error("Error al consultar precio:", error);
+                document.getElementById("precioServicio").value = "";
+            }
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Cargar clientes para el select principal
+            await LlenarComboXServicios("http://proyectoveterinaria.runasp.net/api/Propietarios/LlenarCombo", "#clienteFactura");
+
+            // Cargar servicios para el select único
+            await LlenarComboXServicios("http://proyectoveterinaria.runasp.net/api/Combos/LlenarComboCirugia", "#selectServicio");
+
+            // Cuando cambie el servicio, actualizar el precio
+            document.getElementById("selectServicio").addEventListener("change", function () {
+                document.getElementById("selectServicio").addEventListener("change", async function () {
+                    const servicioId = document.getElementById("selectServicio").value;
+                    const inputPrecio = document.getElementById("precioServicio");
+
+                    if (!servicioId) {
+                        inputPrecio.value = "No hay ID";
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(`http://proyectoveterinaria.runasp.net/api/Servicios/${servicioId}`);
+                        if (!response.ok) throw new Error("Error al obtener el precio del servicio");
+
+                        const servicio = await response.json();
+                        inputPrecio.value = servicio.Precio ?? "";
+                    } catch (error) {
+                        console.error(error);
+                        inputPrecio.value = "";
+                        alert("No se pudo obtener el precio del servicio.");
+                    }
+                });
+
+
+            });
+
+            // Manejar envío del formulario
+            document.getElementById("formNuevaFactura").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const idFactura = document.getElementById("idFactura").value.trim();
+                const idCliente = document.getElementById("clienteFactura").value;
+                const idServicio = document.getElementById("selectServicio").value;
+                const precio = parseFloat(document.getElementById("precioServicio").value);
+
+                if (!idFactura || !idCliente || !idServicio) {
+                    alert("Por favor, complete todos los campos requeridos.");
+                    return;
+                }
+
+                const detalles = [{
+                    ID_Cirugia: parseInt(idServicio),
+                    PrecioUnitario: precio,
+                    ID_Hospitalizacion: null,
+                    ID_ProductoFarmacia: null,
+                    ID_ServicioAdicional: null
+                }];
+
+                const total = precio;
+
+                const factura = {
+                    ID: parseInt(idFactura),
+                    ID_Cliente: parseInt(idCliente),
+                    Fecha: new Date().toISOString(),
+                    Total: total,
+                    Detalles: detalles
+                };
+
+                try {
+                    await EjecutarComandoServicioRpta("POST", "http://proyectoveterinaria.runasp.net/api/Facturas", factura);
+
+                    alert("Factura creada correctamente.");
+                    // Cerrar modal y resetear formulario
+                    const modalNuevaFactura = bootstrap.Modal.getInstance(document.getElementById("modalNuevaFactura"));
+                    modalNuevaFactura.hide();
+                    e.target.reset();
+                    document.getElementById("precioServicio").value = "";
+
+                    // Recargar tabla de facturas
+                    CargarTablaFacturas();
+                } catch (error) {
+                    alert("Error al crear la factura: " + error.message);
+                }
+            });
+}
+           
+
+            // Función para cargar la tabla de facturas (igual que antes)
+            async function CargarTablaFacturas() {
+                try {
+                    const res = await fetch("http://proyectoveterinaria.runasp.net/api/Facturas");
+                    if (!res.ok) throw new Error("Error al cargar facturas");
+                    const facturas = await res.json();
+
+                    const tbody = document.getElementById("tablaFacturas");
+                    tbody.innerHTML = "";
+
+                    facturas.forEach(factura => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                    <td>${factura.ID}</td>
+                    <td>${new Date(factura.Fecha).toLocaleDateString()}</td>
+                    <td>${factura.ClienteNombre || factura.ID_Cliente}</td>
+                    <td>${factura.Total.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" title="Ver detalles">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" title="Eliminar factura">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                        tbody.appendChild(tr);
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            // Cargar facturas inicialmente
+            CargarTablaFacturas();
+        });
+
+        // Generar ID factura como antes
+        function generarIdFactura() {
+            const numeros = Math.floor(10000 + Math.random() * 90000);
+            return `${numeros}`;
+        }
+
+        const modalNuevaFactura = document.getElementById("modalNuevaFactura");
+        modalNuevaFactura.addEventListener("show.bs.modal", () => {
+            document.getElementById("idFactura").value = generarIdFactura();
+        });
+
+    </script>
 
 </body>
 </html>
-
-<script>
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const dropdowns = document.querySelectorAll(".dropdown-servicio");
-
-        dropdowns.forEach(dropdown => {
-            dropdown.addEventListener("change", () => {
-                if (dropdown.value !== "") {
-                    // Deshabilitar los otros dropdowns
-                    dropdowns.forEach(other => {
-                        if (other !== dropdown) {
-                            other.disabled = true;
-                            other.value = "";
-                        }
-                    });
-
-                    // Guardar el valor en el campo oculto
-                    document.getElementById("servicioSeleccionado").value = dropdown.value;
-
-                } else {
-                    // Si deselecciona, habilitar todos
-                    dropdowns.forEach(other => {
-                        other.disabled = false;
-                    });
-
-                    document.getElementById("servicioSeleccionado").value = "";
-                }
-            });
-        });
-    });
-</script>
-
-

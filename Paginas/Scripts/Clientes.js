@@ -6,7 +6,7 @@ async function ObtenerUsuarios() {
     let URL = URLBase + "api/Propietarios/ConsultarTodos";
 
     try {
-        lista = await ConsultarServicio(URL);
+        lista = await ConsultarServicioAuth(URL);
 
         $('#tablaClientes').html('');
 
