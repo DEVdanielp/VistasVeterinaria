@@ -168,7 +168,7 @@ document.getElementById("formRegistrarMascota").addEventListener("submit", funct
 
 async function ObtenerMascotaFiltro(cedula) {
     let URL = URLBase + "api/Mascotas/ConsultarPorPropietario?CedulaPropietario=" + cedula;
-    const contenedor = document.getElementById("listaMascotas");
+    const contenedor = document.getElementById("contenedorMascotas");
 
     try {
         const Mascotas = await ConsultarServicio(URL);
@@ -181,3 +181,5 @@ async function ObtenerMascotaFiltro(cedula) {
 
 // Ejecutar al cargar la página
 window.addEventListener("load", ObtenerUsuarios);
+window.addEventListener("load", ObtenerMascotaFiltro);
+
